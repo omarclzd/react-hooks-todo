@@ -2,12 +2,21 @@ import React, { useState } from "react";
 
 const Form = ({ addTodo }) => {
   const [todo, setTodo] = useState("");
+  let [todos, setTodos] = useState([]);
 
   const handleSubmit = e => {
     e.preventDefault();
+    if (!todo) return;
+    console.log(todo);
 
     setTodo("");
-    console.log(todo);
+    addTodos();
+  };
+
+  const addTodos = () => {
+    todos.push(todo);
+    // console.log(todos.push(todo));
+    console.log(todos);
   };
 
   return (
@@ -20,6 +29,10 @@ const Form = ({ addTodo }) => {
         />
         <button>Sub</button>
       </form>
+
+      {todos.map((todo, idx) => (
+        <div key={idx}>Todo: {todo}</div>
+      ))}
     </div>
   );
 };
