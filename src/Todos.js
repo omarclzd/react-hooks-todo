@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 
-const Task = ({ todo }) => {
+const Todo = ({ todo, idx, completedTodo }) => {
   return (
     <div
       className="task"
       style={{ textDecoration: todo.completed ? "line-through" : "" }}
     >
       {todo.title}
+      <button onClick={() => completedTodo(idx)}>Done</button>
     </div>
   );
 };
@@ -57,13 +58,25 @@ const Todos = () => {
     setTodos(newTodos);
   };
 
+  const completedTodo = idx => {
+    const newTodos = [...todos];
+    console.log(newTodos[idx]);
+    newTodos[idx].completed = true;
+    setTodos(newTodos);
+  };
+
   return (
     <div>
       <div className="todo-container">
         <div className="header">Todo - Items</div>
         <div className="tasks">
           {todos.map((todo, idx) => (
-            <Task todo={todo} index={idx} key={idx} />
+            <Todo
+              todo={todo}
+              idx={idx}
+              completedTodo={completedTodo}
+              key={idx}
+            />
           ))}
         </div>
         <div className="create-task">
