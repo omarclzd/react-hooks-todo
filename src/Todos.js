@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 
-const Todo = ({ todo, idx, completedTodo }) => {
+const Todo = ({ todo, idx, completedTodo, delTodo }) => {
   return (
     <div
       className="task"
       style={{ textDecoration: todo.completed ? "line-through" : "" }}
     >
       {todo.title}
+
+      <button onClick={() => delTodo(idx)}>X</button>
       <button onClick={() => completedTodo(idx)}>Done</button>
     </div>
   );
@@ -38,20 +40,7 @@ const CreateTodo = ({ addTodo }) => {
 };
 
 const Todos = () => {
-  const [todos, setTodos] = useState([
-    {
-      title: "Grab some Pizza",
-      completed: true
-    },
-    {
-      title: "Do your workout",
-      completed: true
-    },
-    {
-      title: "Hangout with friends",
-      completed: false
-    }
-  ]);
+  const [todos, setTodos] = useState([]);
 
   const addTodo = title => {
     const newTodos = [...todos, { title, completed: false }];
@@ -65,6 +54,13 @@ const Todos = () => {
     setTodos(newTodos);
   };
 
+  const delTodo = idx => {
+    const newTodos = [...todos];
+    newTodos.splice(idx, 1);
+    // console.log(newTodos[idx]);
+    setTodos(newTodos);
+  };
+
   return (
     <div>
       <div className="todo-container">
@@ -75,6 +71,7 @@ const Todos = () => {
               todo={todo}
               idx={idx}
               completedTodo={completedTodo}
+              delTodo={delTodo}
               key={idx}
             />
           ))}
